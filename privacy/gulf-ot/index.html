@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Gulf OT | ALsoftrix</title>
+    <meta name="description" content="Privacy Policy for Gulf OT - Overtime Tracker for Gulf Workers by ALsoftrix">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #c8a84e;
+            --gold-light: #f0d078;
+            --bg: #0a0a0a;
+            --bg-card: #111;
+            --bg-header: #1a1a2e;
+            --text: #e0e0e0;
+            --text-sec: #b0b0b0;
+            --text-muted: #888;
+            --link: #64b5f6;
+            --border: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-bottom: 2px solid var(--gold);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header-content { max-width: 800px; margin: 0 auto; }
+
+        .app-icon {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, #c8a84e, #f0d078, #c8a84e);
+            border-radius: 16px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: 800; color: #1a1a2e;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(200, 168, 78, 0.3);
+        }
+
+        .header h1 { font-size: 28px; color: #fff; margin-bottom: 4px; }
+        .header h1 span { color: var(--gold); }
+        .header .subtitle { color: #a0a0a0; font-size: 14px; }
+        .header .developer { color: var(--gold); font-size: 13px; margin-top: 8px; font-weight: 500; }
+
+        /* Container */
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px 60px; }
+
+        .effective-date {
+            text-align: center; color: var(--text-muted); font-size: 14px;
+            margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #222;
+        }
+
+        /* Sections */
+        .section { margin-bottom: 36px; }
+
+        .section h2 {
+            font-size: 20px; color: var(--gold); margin-bottom: 14px;
+            padding-bottom: 8px; border-bottom: 1px solid var(--bg-header);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .section h2 .num {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--bg-header);
+            width: 28px; height: 28px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; flex-shrink: 0;
+        }
+
+        .section p { color: var(--text-sec); margin-bottom: 12px; font-size: 15px; }
+
+        .section ul { list-style: none; padding-left: 0; margin-bottom: 12px; }
+
+        .section ul li {
+            padding: 6px 0 6px 24px; position: relative;
+            color: var(--text-sec); font-size: 15px;
+        }
+
+        .section ul li::before {
+            content: ''; position: absolute; left: 8px; top: 14px;
+            width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+        }
+
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(135deg, rgba(200,168,78,0.08), rgba(200,168,78,0.03));
+            border: 1px solid rgba(200,168,78,0.2);
+            border-left: 3px solid var(--gold);
+            border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+        }
+
+        .highlight p { color: #d4c088; margin-bottom: 0; font-size: 14px; }
+
+        /* Table */
+        .info-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; border-radius: 8px; overflow: hidden;
+        }
+
+        .info-table th, .info-table td { padding: 12px 16px; text-align: left; font-size: 14px; }
+        .info-table th { background: var(--bg-header); color: var(--gold); font-weight: 600; }
+        .info-table td { background: var(--bg-card); color: var(--text-sec); border-bottom: 1px solid var(--border); }
+
+        .badge {
+            display: inline-block; padding: 2px 10px; border-radius: 12px;
+            font-size: 12px; font-weight: 600;
+        }
+
+        .badge-green { background: rgba(76,175,80,0.15); color: #66bb6a; border: 1px solid rgba(76,175,80,0.3); }
+        .badge-blue { background: rgba(66,165,245,0.15); color: #42a5f5; border: 1px solid rgba(66,165,245,0.3); }
+        .badge-orange { background: rgba(255,167,38,0.15); color: #ffa726; border: 1px solid rgba(255,167,38,0.3); }
+
+        /* Contact Card */
+        .contact-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(200,168,78,0.2);
+            border-radius: 12px; padding: 24px; text-align: center; margin-top: 20px;
+        }
+
+        .contact-card h3 { color: var(--gold); margin-bottom: 12px; font-size: 16px; }
+        .contact-card a { color: var(--link); font-size: 15px; }
+
+        /* Footer */
+        .footer {
+            text-align: center; padding: 30px 20px;
+            border-top: 1px solid var(--border); margin-top: 20px;
+        }
+
+        .footer .brand { color: var(--gold); font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+        .footer p { color: #555; font-size: 13px; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 22px; }
+            .section h2 { font-size: 17px; }
+            .container { padding: 24px 16px 40px; }
+            .info-table th, .info-table td { padding: 8px 12px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <div class="app-icon">OT</div>
+            <h1>Privacy Policy &mdash; <span>Gulf OT</span></h1>
+            <p class="subtitle">Overtime Tracker for Gulf Workers</p>
+            <p class="developer">by ALsoftrix</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <p class="effective-date">Effective Date: February 21, 2026 &nbsp;|&nbsp; Last Updated: February 21, 2026</p>
+
+        <!-- 1 -->
+        <div class="section">
+            <h2><span class="num">1</span> Introduction</h2>
+            <p>ALsoftrix ("we", "our", or "us") built the <strong>Gulf OT</strong> app as a free, ad-supported application. This page informs you of our policies regarding the collection, use, and disclosure of information when you use our app.</p>
+            <p>This Privacy Policy complies with Google Play Developer Policies and applicable data protection regulations.</p>
+            <div class="highlight">
+                <p><strong>Key Point:</strong> Gulf OT is an offline-first app. All your overtime data is stored locally on your device and is never uploaded to any server.</p>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="section">
+            <h2><span class="num">2</span> Information We Collect</h2>
+
+            <p><strong>Data Stored Locally on Your Device:</strong></p>
+            <ul>
+                <li>Work schedule and overtime entries</li>
+                <li>Salary and overtime rate settings</li>
+                <li>App preferences (theme, display settings)</li>
+            </ul>
+
+            <div class="highlight">
+                <p>This data is stored exclusively on your device using local storage. We do <strong>not</strong> have access to this data, and it is <strong>never</strong> transmitted to our servers or any third party.</p>
+            </div>
+
+            <p><strong>Data We Do NOT Collect:</strong></p>
+            <ul>
+                <li>Personal identification information (name, email, phone)</li>
+                <li>Location data</li>
+                <li>Contacts or call logs</li>
+                <li>Photos, media, or files</li>
+                <li>Account credentials or passwords</li>
+            </ul>
+        </div>
+
+        <!-- 3 -->
+        <div class="section">
+            <h2><span class="num">3</span> Third-Party Services</h2>
+            <p>The app uses the following third-party services that may collect information:</p>
+
+            <table class="info-table">
+                <tr>
+                    <th>Service</th>
+                    <th>Purpose</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>Google AdMob</td>
+                    <td>Displaying advertisements</td>
+                    <td><span class="badge badge-orange">Ads</span></td>
+                </tr>
+                <tr>
+                    <td>Google Play Services</td>
+                    <td>App distribution &amp; updates</td>
+                    <td><span class="badge badge-blue">Platform</span></td>
+                </tr>
+            </table>
+
+            <p>These services may collect information such as:</p>
+            <ul>
+                <li>Device identifiers (Advertising ID)</li>
+                <li>IP address</li>
+                <li>Device information (model, OS version)</li>
+                <li>App interaction data for ad personalization</li>
+            </ul>
+
+            <p>For more information on how Google handles data, please refer to:</p>
+            <ul>
+                <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+                <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Google AdMob &amp; Privacy</a></li>
+            </ul>
+        </div>
+
+        <!-- 4 -->
+        <div class="section">
+            <h2><span class="num">4</span> Advertisements</h2>
+            <p>Gulf OT is a free app supported by advertisements. Ads are displayed in the following locations:</p>
+            <ul>
+                <li><strong>Banner ads</strong> on the Home and Summary screens</li>
+                <li><strong>Rewarded ads</strong> when exporting PDF reports (optional &mdash; watch to unlock)</li>
+            </ul>
+            <p>No ads are shown on the Settings or Entry screens. You may see personalized ads based on your Google ad preferences, which you can manage in your device's Google settings.</p>
+            <p>Users can opt out of personalized advertising through their device's Google Ad Settings.</p>
+        </div>
+
+        <!-- 5 -->
+        <div class="section">
+            <h2><span class="num">5</span> Data Security</h2>
+            <p>We do not sell, trade, or rent user data to any third party.</p>
+            <p>Since all your data is stored locally on your device:</p>
+            <ul>
+                <li>Your data is as secure as your device itself</li>
+                <li>We recommend using device-level security (PIN, fingerprint, etc.)</li>
+                <li>Uninstalling the app will permanently delete all locally stored data</li>
+                <li>We have no ability to recover your data if it is lost</li>
+            </ul>
+        </div>
+
+        <!-- 6 -->
+        <div class="section">
+            <h2><span class="num">6</span> Data Retention</h2>
+            <p>All app data is stored locally and remains on your device until:</p>
+            <ul>
+                <li>You manually clear the app data</li>
+                <li>You uninstall the application</li>
+                <li>You reset your device</li>
+            </ul>
+            <p>We do not retain any user data on external servers.</p>
+        </div>
+
+        <!-- 7 -->
+        <div class="section">
+            <h2><span class="num">7</span> Children's Privacy</h2>
+            <p>Gulf OT is not directed at children under the age of 13. We do not knowingly collect personal information from children. The app is designed for working adults who need to track overtime hours.</p>
+        </div>
+
+        <!-- 8 -->
+        <div class="section">
+            <h2><span class="num">8</span> App Permissions</h2>
+            <table class="info-table">
+                <tr>
+                    <th>Permission</th>
+                    <th>Reason</th>
+                    <th>Required</th>
+                </tr>
+                <tr>
+                    <td>Internet Access</td>
+                    <td>Required for displaying advertisements</td>
+                    <td><span class="badge badge-green">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>Saving PDF export files to your device</td>
+                    <td><span class="badge badge-blue">Optional</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 9 -->
+        <div class="section">
+            <h2><span class="num">9</span> Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date. We encourage you to review this page periodically.</p>
+        </div>
+
+        <!-- 10 -->
+        <div class="section">
+            <h2><span class="num">10</span> Contact Us</h2>
+            <p>If you have any questions or concerns about this Privacy Policy, please contact us:</p>
+
+            <div class="contact-card">
+                <h3>ALsoftrix</h3>
+                <p style="color: #999; margin-bottom: 8px;">Developer of Gulf OT</p>
+                <a href="mailto:alsoftrix@gmail.com">alsoftrix@gmail.com</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p class="brand">ALsoftrix</p>
+        <p>&copy; 2026 ALsoftrix. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
