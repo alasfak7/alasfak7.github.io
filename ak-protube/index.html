@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK ProTube - Download Any YouTube Video | ALsoftrix</title>
+    <meta name="description" content="AK ProTube - Download YouTube videos in 4K/HD, MP3, playlists and private videos. Fast, free and secure. Built by ALsoftrix.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a12;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb.purple {
+            width: 400px;
+            height: 400px;
+            background: rgba(124, 58, 237, 0.15);
+            top: 10%;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glow-orb.red {
+            width: 300px;
+            height: 300px;
+            background: rgba(239, 68, 68, 0.08);
+            bottom: 20%;
+            left: -80px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .nav-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .nav-title span {
+            color: #a855f7;
+        }
+
+        .nav-download {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 40px 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #a855f7;
+            margin-bottom: 24px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            max-width: 550px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(124, 58, 237, 0.45);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 1.05rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .download-info {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.35);
+            animation: fadeUp 0.8s ease-out 0.4s backwards;
+        }
+
+        /* App Preview */
+        .app-preview {
+            margin-top: 60px;
+            animation: fadeUp 1s ease-out 0.5s backwards;
+        }
+
+        .preview-window {
+            max-width: 520px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #13131f, #1a1a2e);
+            border-radius: 16px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.1);
+        }
+
+        .preview-titlebar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .preview-titlebar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .preview-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .preview-ver {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .preview-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .preview-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-body {
+            padding: 30px 24px;
+            text-align: center;
+        }
+
+        .preview-url-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .preview-url-bar .link-icon {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .preview-url-bar span {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        .preview-url-bar .fetch-btn {
+            margin-left: auto;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .yt-icon {
+            width: 50px;
+            height: 36px;
+            background: #ff0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .yt-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .yt-glow {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255,0,0,0.15), transparent);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .preview-body h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .preview-body p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 20px;
+        }
+
+        .preview-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .preview-tag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .preview-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .preview-tag .dot.green { background: #22c55e; }
+        .preview-tag .dot.blue { background: #3b82f6; }
+        .preview-tag .dot.yellow { background: #eab308; }
+        .preview-tag .dot.orange { background: #f97316; }
+
+        .preview-modes {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .preview-mode {
+            padding: 14px 24px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .preview-mode .mode-icon {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        /* Features */
+        .features {
+            position: relative;
+            z-index: 1;
+            padding: 100px 40px;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #a855f7;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 32px 28px;
+            background: linear-gradient(145deg, rgba(19, 19, 31, 0.8), rgba(26, 26, 46, 0.6));
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(124, 58, 237, 0.12);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta {
+            position: relative;
+            z-index: 1;
+            padding: 80px 40px 100px;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(19, 19, 31, 0.8));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 24px;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        footer a {
+            color: #a855f7;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .features {
+                padding: 60px 20px;
+            }
+
+            .cta {
+                padding: 40px 20px 60px;
+            }
+
+            .cta-box {
+                padding: 40px 24px;
+            }
+
+            .preview-modes {
+                gap: 8px;
+            }
+
+            .preview-mode {
+                padding: 12px 16px;
+            }
+
+            .preview-body {
+                padding: 24px 16px;
+            }
+
+            footer {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-orb purple"></div>
+    <div class="glow-orb red"></div>
+
+    <!-- Nav -->
+    <nav>
+        <a href="#" class="nav-brand">
+            <div class="nav-logo">AK</div>
+            <div>
+                <div class="nav-title">AK <span>ProTube</span></div>
+            </div>
+        </a>
+        <a href="#download" class="nav-download">Download</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="version-badge">v1.0.0 &mdash; Windows</div>
+            <h1>Download Any<br><span class="gradient-text">YouTube Video</span></h1>
+            <p>4K, HD, MP3, playlists, private videos &mdash; all in one click. Fast, clean, and built for power users.</p>
+
+            <div class="hero-buttons" id="download">
+                <a href="https://github.com/alasfak7/alasfak7.github.io/releases/latest/download/AKProTube-Setup.exe" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download for Windows
+                </a>
+                <a href="#features" class="btn-secondary">See Features</a>
+            </div>
+            <p class="download-info">Windows 10/11 &bull; 64-bit &bull; Free &bull; No signup required</p>
+
+            <!-- App Preview -->
+            <div class="app-preview">
+                <div class="preview-window">
+                    <div class="preview-titlebar">
+                        <div class="preview-titlebar-left">
+                            <div class="preview-icon">AK</div>
+                            <div>
+                                <div class="preview-name">AK ProTube</div>
+                                <div class="preview-ver">v1.0.0</div>
+                            </div>
+                        </div>
+                        <div class="preview-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="preview-body">
+                        <div class="preview-url-bar">
+                            <span class="link-icon">&#128279;</span>
+                            <span>Paste YouTube URL here...</span>
+                            <button class="fetch-btn">FETCH &rarr;</button>
+                        </div>
+                        <div style="position:relative; display:inline-block;">
+                            <div class="yt-glow"></div>
+                            <div class="yt-icon"></div>
+                        </div>
+                        <h3>Download Any YouTube Video</h3>
+                        <p>Paste a video or playlist URL above to get started.</p>
+                        <div class="preview-tags">
+                            <span class="preview-tag"><span class="dot green"></span> 4K / HD</span>
+                            <span class="preview-tag"><span class="dot blue"></span> MP3</span>
+                            <span class="preview-tag"><span class="dot yellow"></span> Playlist</span>
+                            <span class="preview-tag"><span class="dot orange"></span> Private</span>
+                        </div>
+                        <div class="preview-modes">
+                            <div class="preview-mode">
+                                <div class="mode-icon">&#9638;</div>
+                                VIDEO
+                            </div>
+                            <div class="preview-mode">
+                                <div class="mode-icon">&#9835;</div>
+                                AUDIO
+                            </div>
+                            <div class="preview-mode">
+                                <div class="mode-icon">&#9776;</div>
+                                PLAYLIST
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-label fade-in">Features</div>
+        <h2 class="section-title fade-in">Everything you need</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#127916;</div>
+                <h3>4K & HD Video</h3>
+                <p>Download videos in the highest quality available &mdash; up to 4K resolution with full audio.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#127925;</div>
+                <h3>MP3 Extraction</h3>
+                <p>Extract audio from any video and save it as a high-quality MP3 file instantly.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128218;</div>
+                <h3>Playlist Support</h3>
+                <p>Download entire playlists in one go. Select all or pick specific videos from the list.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128274;</div>
+                <h3>Private Videos</h3>
+                <p>Access and download private or unlisted videos with your authenticated session.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#9889;</div>
+                <h3>Lightning Fast</h3>
+                <p>Multi-threaded download engine ensures maximum speed for every download.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128171;</div>
+                <h3>Clean & Ad-Free</h3>
+                <p>No ads, no bloatware, no tracking. Just a clean tool that does what it says.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-box fade-in">
+            <h2>Ready to download?</h2>
+            <p>Get AK ProTube now. It's free, fast, and just works.</p>
+            <a href="#download" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built with care by <a href="https://alsoftrix.com">ALsoftrix</a> &bull; &copy; 2025 All rights reserved.</p>
+    </footer>
+
+    <!-- Scroll animations -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
