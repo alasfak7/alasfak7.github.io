@@ -459,6 +459,98 @@
             margin-bottom: 4px;
         }
 
+        .preview-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0 16px;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.7rem;
+        }
+
+        .preview-divider::before,
+        .preview-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .preview-capture-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .preview-capture-bar span {
+            flex: 1;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
+            text-align: left;
+        }
+
+        .preview-capture-bar .capture-btn {
+            padding: 5px 14px;
+            background: rgba(200, 168, 78, 0.12);
+            border: 1px solid rgba(200, 168, 78, 0.2);
+            border-radius: 6px;
+            color: #C8A84E;
+            font-size: 0.65rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+        }
+
+        .preview-capture-hint {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.15);
+            margin-bottom: 4px;
+        }
+
+        .preview-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            background: rgba(0,0,0,0.15);
+        }
+
+        .preview-footer-brand {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .preview-footer-brand span {
+            background: linear-gradient(135deg, #b8860b, #ffd700, #daa520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 0.6rem;
+        }
+
+        .preview-footer-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.55rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        .preview-footer-status .status-dot {
+            width: 5px;
+            height: 5px;
+            background: #34d399;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(52,211,153,0.5);
+        }
+
         /* Features */
         .features {
             position: relative;
@@ -733,6 +825,16 @@
                                 PLAYLIST
                             </div>
                         </div>
+                        <div class="preview-divider"><span>or</span></div>
+                        <div class="preview-capture-bar">
+                            <span>Enter website URL to browse &amp; capture...</span>
+                            <button class="capture-btn">&#127760; Open</button>
+                        </div>
+                        <div class="preview-capture-hint">Browse any site to detect &amp; capture video streams</div>
+                    </div>
+                    <div class="preview-footer">
+                        <div class="preview-footer-brand">Powered by <span>ALsoftrix</span></div>
+                        <div class="preview-footer-status"><div class="status-dot"></div> Ready</div>
                     </div>
                 </div>
             </div>
