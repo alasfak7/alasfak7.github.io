@@ -276,9 +276,9 @@
             margin: 0 auto;
             background: linear-gradient(145deg, #13131f, #1a1a2e);
             border-radius: 16px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(200, 168, 78, 0.2);
             overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(200, 168, 78, 0.1);
         }
 
         .preview-titlebar {
@@ -299,7 +299,7 @@
         .preview-icon {
             width: 28px;
             height: 28px;
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f5d78e);
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -358,7 +358,7 @@
         .preview-url-bar .fetch-btn {
             margin-left: auto;
             padding: 8px 20px;
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            background: linear-gradient(135deg, #b8860b, #C8A84E);
             border: none;
             border-radius: 6px;
             color: #fff;
@@ -367,11 +367,9 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .yt-icon {
+        .play-icon {
             width: 50px;
-            height: 36px;
-            background: #ff0000;
-            border-radius: 8px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -379,24 +377,25 @@
             position: relative;
         }
 
-        .yt-icon::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 8px 0 8px 14px;
-            border-color: transparent transparent transparent #fff;
+        .play-icon svg {
+            filter: drop-shadow(0 4px 16px rgba(200, 168, 78, 0.5));
         }
 
-        .yt-glow {
+        .play-glow {
             position: absolute;
             width: 80px;
             height: 80px;
-            background: radial-gradient(circle, rgba(255,0,0,0.15), transparent);
+            background: radial-gradient(circle, rgba(200, 168, 78, 0.15), transparent);
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
         }
 
         .preview-body h3 {
@@ -433,10 +432,11 @@
             border-radius: 50%;
         }
 
-        .preview-tag .dot.green { background: #22c55e; }
-        .preview-tag .dot.blue { background: #3b82f6; }
-        .preview-tag .dot.yellow { background: #eab308; }
-        .preview-tag .dot.orange { background: #f97316; }
+        .preview-tag .dot.gold { background: #d4af37; }
+        .preview-tag .dot.gold-light { background: #C8A84E; }
+        .preview-tag .dot.gold-dark { background: #daa520; }
+        .preview-tag .dot.gold-pale { background: #f5d78e; }
+        .preview-tag .dot.gold-deep { background: #b8860b; }
 
         .preview-modes {
             display: flex;
@@ -660,7 +660,7 @@
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
-            <div class="version-badge">v1.0.0 &mdash; Windows</div>
+            <div class="version-badge">v1.1.0 &mdash; Windows</div>
             <h1>Download Any<br><span class="gradient-text">Online Video</span></h1>
             <p>4K, HD, MP3, playlists &mdash; all in one click. Fast, clean, and built for power users.</p>
 
@@ -680,7 +680,7 @@
                             <div class="preview-icon">AK</div>
                             <div>
                                 <div class="preview-name">AK ProTube</div>
-                                <div class="preview-ver">v1.0.0</div>
+                                <div class="preview-ver">v1.1.0</div>
                             </div>
                         </div>
                         <div class="preview-dots">
@@ -692,20 +692,32 @@
                     <div class="preview-body">
                         <div class="preview-url-bar">
                             <span class="link-icon">&#128279;</span>
-                            <span>Paste video URL here...</span>
+                            <span>Paste video or playlist URL...</span>
                             <button class="fetch-btn">FETCH &rarr;</button>
                         </div>
                         <div style="position:relative; display:inline-block;">
-                            <div class="yt-glow"></div>
-                            <div class="yt-icon"></div>
+                            <div class="play-glow"></div>
+                            <div class="play-icon">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                                    <defs>
+                                        <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0%" stop-color="#f7d94e"/>
+                                            <stop offset="50%" stop-color="#f5c518"/>
+                                            <stop offset="100%" stop-color="#e8a317"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <polygon points="6 3 20 12 6 21" fill="url(#goldGrad)"/>
+                                </svg>
+                            </div>
                         </div>
-                        <h3>Download Any Online Video</h3>
-                        <p>Paste a video or playlist URL above to get started.</p>
+                        <h3>Download Any Video</h3>
+                        <p>Download from 1800+ sites in 4K, HD, or MP3. Paste any URL to get started.</p>
                         <div class="preview-tags">
-                            <span class="preview-tag"><span class="dot green"></span> 4K / HD</span>
-                            <span class="preview-tag"><span class="dot blue"></span> MP3</span>
-                            <span class="preview-tag"><span class="dot yellow"></span> Playlist</span>
-                            <span class="preview-tag"><span class="dot orange"></span> Multi-platform</span>
+                            <span class="preview-tag"><span class="dot gold"></span> 4K / HD</span>
+                            <span class="preview-tag"><span class="dot gold-light"></span> MP3</span>
+                            <span class="preview-tag"><span class="dot gold-dark"></span> Playlist</span>
+                            <span class="preview-tag"><span class="dot gold-pale"></span> Private</span>
+                            <span class="preview-tag"><span class="dot gold-deep"></span> 1800+ Sites</span>
                         </div>
                         <div class="preview-modes">
                             <div class="preview-mode">
@@ -734,33 +746,33 @@
         <div class="features-grid">
             <div class="feature-card fade-in">
                 <div class="feature-icon">&#127916;</div>
-                <h3>4K & HD Video</h3>
-                <p>Download videos in the highest quality available &mdash; up to 4K resolution with full audio.</p>
+                <h3>4K & HD Quality</h3>
+                <p>Grab videos in up to 4K resolution with perfectly synced audio. Pick your quality &mdash; 2160p, 1080p, 720p, or lower.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">&#127925;</div>
-                <h3>MP3 Extraction</h3>
-                <p>Extract audio from any video and save it as a high-quality MP3 file instantly.</p>
+                <h3>MP3 Audio</h3>
+                <p>One-click audio extraction. Convert any video to high-quality MP3 &mdash; perfect for music, podcasts, and lectures.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">&#128218;</div>
-                <h3>Playlist Support</h3>
-                <p>Download entire playlists in one go. Select all or pick specific videos from the list.</p>
+                <h3>Playlist Downloads</h3>
+                <p>Download full playlists at once. Select all or cherry-pick specific videos with individual checkboxes.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">&#127760;</div>
-                <h3>Multi-Platform</h3>
-                <p>Supports YouTube, Instagram, Twitter, Facebook and many more platforms.</p>
+                <h3>1800+ Sites</h3>
+                <p>Works with Instagram, Twitter, Facebook, Vimeo, Dailymotion, and 1800+ more. One tool for everything.</p>
             </div>
             <div class="feature-card fade-in">
-                <div class="feature-icon">&#9889;</div>
-                <h3>Lightning Fast</h3>
-                <p>Multi-threaded download engine ensures maximum speed for every download.</p>
+                <div class="feature-icon">&#128270;</div>
+                <h3>Browser Capture</h3>
+                <p>Built-in browser to detect and capture video streams from any website &mdash; even embedded players and iframes.</p>
             </div>
             <div class="feature-card fade-in">
                 <div class="feature-icon">&#128171;</div>
-                <h3>Clean & Ad-Free</h3>
-                <p>No ads, no bloatware, no tracking. Just a clean tool that does what it says.</p>
+                <h3>Clean & Private</h3>
+                <p>Zero ads, zero tracking, zero bloatware. Your downloads stay on your machine. Nothing leaves your PC.</p>
             </div>
         </div>
     </section>
