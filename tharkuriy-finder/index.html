@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Tharkuriy Finder 3000 | ALsoftrix</title>
+<meta name="description" content="Tharkuriy Finder 3000 — Iron Man style AI face-scanner. Just for fun by ALsoftrix." />
+<meta name="theme-color" content="#000308" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  :root{
+    --cyan:#22e0ff;
+    --cyan-soft:rgba(34,224,255,.30);
+    --gold:#ffd166;
+    --red:#ff3b5c;
+    --bg:#000409;
+    --ink:#dff7ff;
+  }
+  html,body{height:100%;background:var(--bg);color:var(--ink);
+    font-family:'Rajdhani',sans-serif;overflow:hidden}
+  body{position:fixed;inset:0;width:100%;height:100%}
+
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(34,224,255,.10), transparent 62%),
+      linear-gradient(rgba(34,224,255,.04) 1px,transparent 1px) 0 0/100% 44px,
+      linear-gradient(90deg,rgba(34,224,255,.04) 1px,transparent 1px) 0 0/44px 100%;
+  }
+
+  /* ===================== INTRO ===================== */
+  #intro{
+    position:fixed;inset:0;z-index:10;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:24px;
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  #intro.hide{opacity:0;transform:scale(1.08);pointer-events:none}
+
+  .brand{
+    font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:4px;
+    font-size:clamp(10px,3vw,13px);color:var(--cyan);opacity:.8;margin-bottom:14px;
+  }
+  .brand b{color:var(--gold);font-weight:700}
+  .title{
+    font-family:'Orbitron',sans-serif;font-weight:900;line-height:1;
+    font-size:clamp(34px,11vw,68px);letter-spacing:1px;
+    background:linear-gradient(180deg,#ffffff,#9bf2ff 55%,#19b6d6);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 36px rgba(34,224,255,.25);
+  }
+  .subtitle{
+    font-family:'Orbitron',sans-serif;font-weight:600;letter-spacing:10px;
+    font-size:clamp(11px,3.6vw,16px);color:var(--gold);margin-top:8px;padding-left:10px;
+  }
+  .tagline{
+    margin:20px auto 32px;max-width:430px;color:#86c6d6;
+    font-size:clamp(14px,4vw,17px);line-height:1.55;font-weight:500;letter-spacing:.3px;
+  }
+  .tagline b{color:var(--cyan);font-weight:700}
+
+  /* Big scan button */
+  .scan-btn{
+    position:relative;cursor:pointer;border:none;background:transparent;
+    margin-top:46px;
+    width:min(70vw,250px);height:min(70vw,250px);
+    display:flex;align-items:center;justify-content:center;border-radius:50%;
+  }
+  .ring{position:absolute;border-radius:50%}
+  .ring.r1{inset:0;border:1.5px solid var(--cyan-soft);animation:spin 12s linear infinite}
+  .ring.r2{inset:12px;border:1px dashed rgba(255,209,102,.45);animation:spin 7s linear infinite reverse}
+  .ring.r3{inset:26px;border:1px solid rgba(34,224,255,.18);animation:spin 18s linear infinite}
+  .ticks{position:absolute;inset:4px;border-radius:50%;
+    background:
+      conic-gradient(from 0deg, transparent 0 6deg, rgba(34,224,255,.5) 6deg 6.6deg, transparent 6.6deg 12deg);
+    -webkit-mask:radial-gradient(circle, transparent 0 46%, #000 46% 50%, transparent 51%);
+            mask:radial-gradient(circle, transparent 0 46%, #000 46% 50%, transparent 51%);
+    animation:spin 30s linear infinite;opacity:.6}
+  .core{
+    position:absolute;inset:42px;border-radius:50%;
+    background:radial-gradient(circle at 50% 35%, rgba(34,224,255,.32), rgba(0,30,45,.9) 72%);
+    border:1.5px solid var(--cyan);
+    box-shadow:0 0 40px var(--cyan-soft), inset 0 0 36px rgba(34,224,255,.22);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .core .ic{font-size:clamp(30px,10vw,46px);line-height:1;filter:drop-shadow(0 0 8px var(--cyan))}
+  .core .lbl{font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:3px;
+    font-size:clamp(12px,3.4vw,15px);margin-top:10px;color:#eafcff}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulse{0%,100%{box-shadow:0 0 30px var(--cyan-soft),inset 0 0 28px rgba(34,224,255,.18)}
+    50%{box-shadow:0 0 56px var(--cyan),inset 0 0 46px rgba(34,224,255,.38)}}
+
+  .hint{margin-top:30px;font-family:'Orbitron',sans-serif;font-size:11px;
+    letter-spacing:3px;color:#4f7a86}
+  .hint::before{content:"▸ "}
+  .disclaimer{position:fixed;bottom:16px;left:0;right:0;text-align:center;
+    font-size:12px;color:#46656e;z-index:11;padding:0 18px;letter-spacing:.5px}
+
+  /* ===================== SCANNER ===================== */
+  #scanner{position:fixed;inset:0;z-index:5;display:none;background:#000}
+  #scanner.on{display:block}
+  #video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+  #overlay{position:absolute;inset:0;width:100%;height:100%}
+  .mirror{transform:scaleX(-1)}
+
+  .hud-frame{position:absolute;inset:0;pointer-events:none;z-index:6}
+  .hud-frame span{position:absolute;width:42px;height:42px;border:1.5px solid var(--cyan);opacity:.55}
+  .hud-frame .tl{top:14px;left:14px;border-right:none;border-bottom:none}
+  .hud-frame .tr{top:14px;right:14px;border-left:none;border-bottom:none}
+  .hud-frame .bl{bottom:14px;left:14px;border-right:none;border-top:none}
+  .hud-frame .br{bottom:14px;right:14px;border-left:none;border-top:none}
+
+  .top-bar{
+    position:absolute;top:0;left:0;right:0;z-index:7;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top));
+    font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1.5px;
+    background:linear-gradient(180deg,rgba(0,6,12,.7),transparent);
+  }
+  .stat{color:var(--cyan)}
+  .stat .num{color:var(--gold)}
+  .rec{display:flex;align-items:center;gap:6px;color:var(--red)}
+  .rec .dot{width:8px;height:8px;border-radius:50%;background:var(--red);
+    animation:blink 1s steps(1) infinite;box-shadow:0 0 8px var(--red)}
+  @keyframes blink{50%{opacity:.2}}
+
+  .controls{
+    position:absolute;left:0;right:0;bottom:0;z-index:7;
+    display:flex;justify-content:center;gap:14px;
+    padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));
+    background:linear-gradient(0deg,rgba(0,6,12,.78),transparent);
+  }
+  .ctl{
+    background:rgba(0,36,52,.55);border:1.5px solid var(--cyan);color:#eafcff;
+    font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:1.5px;
+    padding:11px 18px;border-radius:8px;cursor:pointer;backdrop-filter:blur(6px);
+    display:flex;align-items:center;gap:7px;transition:.18s;
+  }
+  .ctl:active{transform:scale(.94);background:rgba(34,224,255,.22)}
+  .ctl.exit{border-color:var(--red);color:#ffd9e0}
+
+  .sweep{position:absolute;left:0;right:0;height:2px;z-index:6;pointer-events:none;
+    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+    box-shadow:0 0 16px var(--cyan);animation:sweep 2.6s ease-in-out infinite}
+  @keyframes sweep{0%{top:10%}50%{top:90%}100%{top:10%}}
+
+  #loader{position:absolute;inset:0;z-index:8;display:none;flex-direction:column;
+    align-items:center;justify-content:center;background:rgba(0,4,9,.93);text-align:center;padding:24px}
+  #loader.on{display:flex}
+  .spin{width:54px;height:54px;border:2.5px solid rgba(34,224,255,.22);border-top-color:var(--cyan);
+    border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px}
+  #loader .txt{font-family:'Orbitron',sans-serif;letter-spacing:2.5px;color:var(--cyan);font-size:14px}
+  #loader .sub{margin-top:10px;color:#79b3c0;font-size:13px;letter-spacing:.5px}
+  #loader .err{display:none;color:var(--red);max-width:360px;line-height:1.6;font-size:14px}
+  #loader .retry{margin-top:20px;display:none}
+  #loader.error .spin{display:none}
+  #loader.error .retry{display:inline-flex}
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- ===================== INTRO ===================== -->
+  <section id="intro">
+    <h1 class="title">THARKURIY</h1>
+    <div class="subtitle">FINDER</div>
+
+    <button class="scan-btn" id="startBtn" aria-label="Start scan">
+      <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+      <span class="ticks"></span>
+      <span class="core">
+        <span class="lbl">START SCAN</span>
+      </span>
+    </button>
+
+    <div class="hint">TAP TO ACTIVATE NEURAL CAMERA</div>
+  </section>
+  <div class="disclaimer" id="disc">For entertainment only · Nothing real is detected · No data leaves your device · ALsoftrix</div>
+
+  <!-- ===================== SCANNER ===================== -->
+  <section id="scanner">
+    <video id="video" playsinline autoplay muted></video>
+    <canvas id="overlay"></canvas>
+    <div class="hud-frame"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+    <div class="sweep" id="sweep"></div>
+
+    <div class="top-bar">
+      <span class="stat">⬡ TARGETS&nbsp;<span class="num" id="count">0</span></span>
+    </div>
+
+    <div class="controls">
+      <button class="ctl" id="flipBtn">⟲ FLIP</button>
+      <button class="ctl exit" id="exitBtn">✕ EXIT</button>
+    </div>
+
+    <div id="loader">
+      <div class="spin"></div>
+      <div class="txt" id="ldTxt">BOOTING NEURAL CORE</div>
+      <div class="sub" id="ldSub">Loading A.I. model</div>
+      <div class="err" id="ldErr"></div>
+      <button class="ctl retry" id="retryBtn">↻ RETRY</button>
+    </div>
+  </section>
+
+<script type="module">
+import { FaceDetector, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.12";
+
+const $ = s => document.querySelector(s);
+const intro=$("#intro"), disc=$("#disc"), scanner=$("#scanner");
+const video=$("#video"), canvas=$("#overlay"), ctx=canvas.getContext("2d");
+const loader=$("#loader"), ldTxt=$("#ldTxt"), ldSub=$("#ldSub"), ldErr=$("#ldErr");
+const sweep=$("#sweep"), countEl=$("#count");
+
+let detector=null, stream=null, facing="environment", running=false, rafId=null, lastVideoTime=-1;
+
+/* ---------- face tracking: stable RANDOM "THARKURIY" subset ---------- */
+const SHOW_RATE = 0.6;        // ~6 of every 10 detected faces get tagged
+let tracks = [];              // {id,cx,cy,x,y,w,h,show,missed,matched}
+let nextId = 1;
+
+function updateTracks(boxes){
+  tracks.forEach(t=> t.matched=false);
+  boxes.forEach(box=>{
+    let best=null, bestD=Infinity;
+    tracks.forEach(t=>{
+      if(t.matched) return;
+      const d=Math.hypot(t.cx-box.cx, t.cy-box.cy);
+      const thr=Math.max(box.w,t.w)*0.9;        // match if close enough
+      if(d<thr && d<bestD){ bestD=d; best=t; }
+    });
+    if(best){
+      Object.assign(best,{cx:box.cx,cy:box.cy,x:box.x,y:box.y,w:box.w,h:box.h,matched:true,missed:0});
+      box.track=best;
+    }else{
+      const nt={id:nextId++,cx:box.cx,cy:box.cy,x:box.x,y:box.y,w:box.w,h:box.h,
+                show:Math.random()<SHOW_RATE, matched:true, missed:0};   // sticky decision
+      tracks.push(nt); box.track=nt;
+    }
+  });
+  tracks = tracks.filter(t=>{ if(!t.matched) t.missed++; return t.missed<=8; });
+}
+
+/* ---------- flow ---------- */
+$("#startBtn").addEventListener("click", startScan);
+$("#exitBtn").addEventListener("click", stopScan);
+$("#retryBtn").addEventListener("click", startScan);
+$("#flipBtn").addEventListener("click", async()=>{ facing = facing==="environment"?"user":"environment"; await openCamera(); });
+
+async function startScan(){
+  intro.classList.add("hide"); disc.style.display="none";
+  scanner.classList.add("on");
+  loader.classList.remove("error"); loader.classList.add("on");
+  ldErr.style.display="none";
+  try{
+    if(!detector){
+      ldTxt.textContent="BOOTING NEURAL CORE"; ldSub.textContent="Loading A.I. model (~2 MB)";
+      const vision=await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.12/wasm");
+      detector=await FaceDetector.createFromOptions(vision,{
+        baseOptions:{ modelAssetPath:"https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite", delegate:"GPU" },
+        runningMode:"VIDEO", minDetectionConfidence:0.4
+      });
+    }
+    ldTxt.textContent="ACCESSING CAMERA"; ldSub.textContent="Tap “Allow” to continue";
+    await openCamera();
+    loader.classList.remove("on");
+    if(!running){ running=true; loop(); }
+  }catch(err){ showError(err); }
+}
+
+async function openCamera(){
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  stream=await navigator.mediaDevices.getUserMedia({
+    video:{ facingMode:{ideal:facing}, width:{ideal:1280}, height:{ideal:720} }, audio:false
+  });
+  video.srcObject=stream;
+  const mir=facing==="user";
+  video.classList.toggle("mirror",mir); canvas.classList.toggle("mirror",mir);
+  await video.play().catch(()=>{});
+}
+
+function showError(err){
+  console.error(err);
+  loader.classList.add("on","error"); ldErr.style.display="block";
+  const name=err&&(err.name||"");
+  let msg;
+  if(name==="NotAllowedError"||name==="SecurityError")
+    msg="📷 Camera permission was blocked.<br>Allow camera in your browser settings, then RETRY.";
+  else if(name==="NotFoundError")
+    msg="📷 No camera found on this device.";
+  else if(location.protocol!=="https:"&&location.hostname!=="localhost")
+    msg="🔒 Camera needs HTTPS. Open the site via https://alsoftrix.com";
+  else
+    msg="⚠️ Could not start: "+(err&&err.message?err.message:err)+"<br>Check your connection and RETRY.";
+  ldErr.innerHTML=msg;
+}
+
+function stopScan(){
+  running=false;
+  if(rafId) cancelAnimationFrame(rafId);
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  video.srcObject=null;
+  scanner.classList.remove("on");
+  loader.classList.remove("on","error"); ldErr.style.display="none";
+  intro.classList.remove("hide"); disc.style.display="block";
+}
+
+/* ---------- detect + draw ---------- */
+function loop(){
+  if(!running) return;
+  rafId=requestAnimationFrame(loop);
+  const cw=scanner.clientWidth, ch=scanner.clientHeight;
+  if(canvas.width!==cw) canvas.width=cw;
+  if(canvas.height!==ch) canvas.height=ch;
+  const vw=video.videoWidth, vh=video.videoHeight;
+  ctx.clearRect(0,0,cw,ch);
+  if(!detector||!vw||video.readyState<2) return;
+
+  let res;
+  if(video.currentTime!==lastVideoTime){
+    lastVideoTime=video.currentTime;
+    try{ res=detector.detectForVideo(video,performance.now()); }catch(e){ return; }
+    loop._last=res;
+  } else res=loop._last;
+  if(!res) return;
+
+  const scale=Math.max(cw/vw,ch/vh), dW=vw*scale, dH=vh*scale, ox=(cw-dW)/2, oy=(ch-dH)/2;
+  const dets=res.detections||[];
+
+  const boxes=dets.map(d=>{
+    const b=d.boundingBox;
+    let x=ox+b.originX*scale, y=oy+b.originY*scale, w=b.width*scale, h=b.height*scale;
+    const gy=h*0.30; y-=gy; h+=gy*1.18; x-=w*0.08; w+=w*0.16;   // grow to wrap whole head
+    return {x,y,w,h,cx:x+w/2,cy:y+h/2};
+  });
+  updateTracks(boxes);
+
+  const shown=boxes.filter(b=>b.track && b.track.show);
+  countEl.textContent=shown.length;
+  sweep.style.display=boxes.length?"none":"block";
+
+  shown.forEach((b,i)=> drawTag(b,i));
+}
+
+const CY="#22e0ff", GOLD="#ffd166";
+function drawTag(b,i){
+  const {x,y,w,h}=b, cx=x+w/2, t=performance.now()/1000;
+  ctx.save();
+  ctx.lineWidth=1.8; ctx.strokeStyle=CY; ctx.shadowColor=CY; ctx.shadowBlur=10;
+
+  // corner brackets around the head
+  const c=Math.min(w,h)*0.26;
+  [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]].forEach(([px,py,sx,sy])=>{
+    ctx.beginPath(); ctx.moveTo(px,py+sy*c); ctx.lineTo(px,py); ctx.lineTo(px+sx*c,py); ctx.stroke();
+  });
+
+  // animated scan line + center dot (light targeting feel)
+  const sy2=y+(h*(0.5+0.42*Math.sin(t*2.4+i)));
+  ctx.globalAlpha=.6; ctx.beginPath(); ctx.moveTo(x,sy2); ctx.lineTo(x+w,sy2); ctx.stroke(); ctx.globalAlpha=1;
+  ctx.beginPath(); ctx.arc(cx,y+h*0.45,3.5,0,Math.PI*2); ctx.stroke();
+
+  // ---- clean THARKURIY pill above head ----
+  const txt="THARKURIY";
+  const fs=Math.max(13,Math.min(20,w*0.16));
+  const font=`700 ${fs.toFixed(0)}px 'Orbitron',sans-serif`;
+  ctx.font=font;
+  const tw=ctx.measureText(txt).width;
+  const padX=13, pillH=fs+16, pillW=tw+padX*2;
+  let px=cx-pillW/2;
+  let py=y-pillH-14;
+  if(py<8) py=y+h+14;
+  px=Math.max(6,Math.min(px,canvas.width-pillW-6));
+
+  // connector line head -> pill
+  ctx.globalAlpha=.6; ctx.beginPath();
+  ctx.moveTo(cx,y); ctx.lineTo(cx, py<y ? py+pillH : py); ctx.stroke(); ctx.globalAlpha=1;
+
+  // pill bg
+  ctx.shadowBlur=14;
+  ctx.fillStyle="rgba(0,12,20,.82)"; ctx.strokeStyle=CY; ctx.lineWidth=1.5;
+  roundRect(px,py,pillW,pillH,pillH/2); ctx.fill(); ctx.stroke();
+
+  // text
+  ctx.shadowBlur=8; ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.fillStyle="#ffffff"; ctx.font=font;
+  ctx.fillText(txt, px+pillW/2, py+pillH/2+0.5);
+
+  ctx.restore();
+}
+
+function roundRect(x,y,w,h,r){
+  ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+window.addEventListener("pagehide", stopScan);
+</script>
+</body>
+</html>
