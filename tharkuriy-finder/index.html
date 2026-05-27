@@ -190,7 +190,8 @@
     <div class="sweep" id="sweep"></div>
 
     <div class="top-bar">
-      <span class="stat">⬡ TARGETS&nbsp;<span class="num" id="count">0</span></span>
+      <span class="stat">⬡ FACES&nbsp;<span class="num" id="count">0</span></span>
+      <span class="stat" id="eng" style="opacity:.6;font-size:10px"></span>
     </div>
 
     <div class="controls">
@@ -267,8 +268,10 @@ async function startScan(){
       });
       // CPU = reliable on every mobile browser (incl. Brave, whose WebGL shield
       // breaks the GPU delegate). BlazeFace is tiny, so CPU is plenty fast.
+      let engine="CPU";
       try{ detector=await make("CPU"); }
-      catch(e){ detector=await make("GPU"); }
+      catch(e){ engine="GPU"; detector=await make("GPU"); }
+      const eng=document.getElementById("eng"); if(eng) eng.textContent="b5·"+engine;
     }
     ldTxt.textContent="ACCESSING CAMERA"; ldSub.textContent="Tap “Allow” to continue";
     await openCamera();
@@ -347,7 +350,7 @@ function loop(){
   updateTracks(boxes);
 
   const shown=boxes.filter(b=>b.track && b.track.show);
-  countEl.textContent=shown.length;
+  countEl.textContent=boxes.length;          // raw detected faces (diagnostic + honest)
   sweep.style.display=boxes.length?"none":"block";
 
   shown.forEach((b,i)=> drawTag(b,i));
